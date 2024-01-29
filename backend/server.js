@@ -1,7 +1,9 @@
 const express = require("express");
+const app = express();
 const mongoose = require("mongoose");
 const port = 3000;
 const dotenv = require("dotenv");
+const mainRoute = require("./routes/index.js")
 
 dotenv.config();
 
@@ -14,15 +16,9 @@ const connect = async () => {
   }
 };
 
-const app = express();
+app.use("/api", mainRoute)
 
-app.get("/", (req, res) => {
-  res.send("Hello Nodemon Express.js");
-});
 
-app.get("/api", (req, res) => {
-  res.send("Bu api");
-});
 
 app.listen(3000, () => {
   connect();
