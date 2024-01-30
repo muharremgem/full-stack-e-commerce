@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const Category = require("../models/Category.js");
 
 router.post("/", async (req, res) => {
   try {
-    const myData = req.body;
+    const { name, img } = req.body;
 
-    console.log(myData);
+    const newCategory = new Category({ name, img });
+    await newCategory.save();
+
     res.status(200).send("ok");
   } catch (error) {
     console.log(error);

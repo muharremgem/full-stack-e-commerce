@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const port = 3000;
 const dotenv = require("dotenv");
-const mainRoute = require("./routes/index.js")
+const mainRoute = require("./routes/index.js");
 
 dotenv.config();
 
@@ -16,9 +16,10 @@ const connect = async () => {
   }
 };
 
-app.use("/api", mainRoute)
+// Middlewares
+app.use(express.json());
 
-
+app.use("/api", mainRoute);
 
 app.listen(3000, () => {
   connect();
