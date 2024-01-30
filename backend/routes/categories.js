@@ -1,31 +1,47 @@
 const express = require("express");
 const router = express.Router();
-const Category = require("../models/Category.js");
+const Category = require("../models/Category");
 
-// yeni bir kategori oluşturma
-
+// Yeni Kategori Ekleme (Create)
 router.post("/", async (req, res) => {
   try {
     const { name, img } = req.body;
-
-    const newCategory = new Category({ name, img });
+    const newCategory = new Category({
+      name,
+      img,
+    });
     await newCategory.save();
-
     res.status(201).send(newCategory);
   } catch (error) {
     console.log(error);
   }
 });
 
-// Tüm kategoriler  getirme (Read- All)
+// Tümü Kategoriler (Read)
 router.get("/", async (req, res) => {
   try {
     const categories = await Category.find();
-
-    res.status(200).json(categories);
+    res.status(201).json(categories);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Server error." });
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+// Tek Kategori (Single)
+router.get("/:categoryId", async (req, res) => {
+  try {
+    const categoryId = req.params.categoryId;
+    try {
+      const category = await Category.findById(categoryId);
+      res.status(200).json(category);
+    } catch (error) {
+      console.log(error);
+      return res.status(404).json({ error: "The category was not found." });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Server Error" });
   }
 });
 
