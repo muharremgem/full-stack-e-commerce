@@ -45,4 +45,22 @@ router.get("/:categoryId", async (req, res) => {
   }
 });
 
+// Kategori Güncelleme (update)
+router.put("/:categoryId", async (req, res) => {
+  try {
+    const categoryId = req.params.categoryId;
+    const updates = req.body;
+
+    const updatedCategory = await Category.findByIdAndUpdate(
+      categoryId,
+      updates
+    );
+
+    res.status(200).json(updatedCategory);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
 module.exports = router;
