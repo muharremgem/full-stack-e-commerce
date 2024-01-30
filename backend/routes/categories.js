@@ -70,7 +70,7 @@ router.put("/:categoryId", async (req, res) => {
   }
 });
 
-// Kategori Silme İşlemi
+//* Kategori Silme İşlemi
 
 router.delete("/:categoryId", async (req, res) => {
   try {
