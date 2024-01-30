@@ -3,16 +3,23 @@ const router = express.Router();
 const User = require("../models/User.js");
 const bcrypt = require("bcryptjs");
 
+const generateRandomAvatar = () => {
+  const randomAvatar = Math.floor(Math.random() * 71);
+  return `https://i.pravatar.cc/300?img=${randomAvatar} `;
+};
+
 //kullanıcı Olursturma
 
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    const existingUser = await User.findOne({ email  });
+    const defaultAvatar = generateRandomAvatar();
 
-    if(existingUser){
-        return  res.status(400).json({ error: "Kullanıcı zaten mevcut." })
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({ error: "Kullanıcı zaten mevcut." });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -21,6 +28,7 @@ router.post("/register", async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      avatar: defaultAvatar,
     });
     await newUser.save();
 
