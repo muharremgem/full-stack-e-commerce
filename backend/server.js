@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const port = 3000;
 const dotenv = require("dotenv");
 const mainRoute = require("./routes/index.js");
+const logger = require("morgan");
 
 dotenv.config();
 
@@ -17,6 +18,9 @@ const connect = async () => {
 };
 
 // Middlewares
+app.use(logger("dev"));
+
+
 app.use(express.json());
 
 app.use("/api", mainRoute);
