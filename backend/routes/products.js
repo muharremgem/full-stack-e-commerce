@@ -17,27 +17,29 @@ router.post("/", async (req, res) => {
 });
 
 
-// Tümü Kategoriler (Read)
+// Tümü Ürünleri getirdme (Read)
 router.get("/", async (req, res) => {
   try {
-    const categories = await Category.find();
-    res.status(201).json(categories);
+    const products = await Product.find();
+    res.status(201).json(products);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Server Error" });
   }
 });
 
+
+
 // Tek Kategori (Single)
-router.get("/:categoryId", async (req, res) => {
+router.get("/:productId", async (req, res) => {
   try {
-    const categoryId = req.params.categoryId;
+    const productId = req.params.productId;
     try {
-      const category = await Category.findById(categoryId);
-      res.status(200).json(category);
+      const product = await Product.findById(productId);
+      res.status(200).json(product);
     } catch (error) {
       console.log(error);
-      return res.status(404).json({ error: "The category was not found." });
+      return res.status(404).json({ error: "The product was not found." });
     }
   } catch (error) {
     console.log(error);
