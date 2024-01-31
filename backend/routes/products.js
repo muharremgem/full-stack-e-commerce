@@ -48,24 +48,24 @@ router.get("/:productId", async (req, res) => {
 });
 
 // Kategori Güncelleme (update)
-router.put("/:categoryId", async (req, res) => {
+router.put("/:productId", async (req, res) => {
   try {
-    const categoryId = req.params.categoryId;
+    const productId = req.params.productId;
     const updates = req.body;
 
-    const existingCategory = await Category.findById(categoryId);
+    const existingProduct = await Product.findById(productId);
 
-    if (!existingCategory) {
-      return res.status(404).json({ error: "The category was not found." });
+    if (!existingProduct) {
+      return res.status(404).json({ error: "The Product was not found." });
     }
 
-    const updatedCategory = await Category.findByIdAndUpdate(
-      categoryId,
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
       updates,
       { new: true }
     );
 
-    res.status(200).json(updatedCategory);
+    res.status(200).json(updatedProduct);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Server Error" });
@@ -74,13 +74,13 @@ router.put("/:categoryId", async (req, res) => {
 
 //* Kategori Silme İşlemi
 
-router.delete("/:categoryId", async (req, res) => {
+router.delete("/:productId", async (req, res) => {
   try {
-    const categoryId = req.params.categoryId;
-    const deletedCategory = await Category.findOneAndDelete(categoryId);
+    const productId = req.params.productId;
+    const deletedProduct = await Product.findOneAndDelete(productId);
 
-    if (!deletedCategory) {
-      return res.status(404).json({ error: "The category was not found." });
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "The product was not found." });
     }
 
     res.status(200).json("Deletion is successful.");
